@@ -22,7 +22,7 @@ namespace Rotativa.AspNetCore.Demo.Controllers
         {
             ViewData["Message"] = "Your application description page.";
             var model = new TestModel { Name = "Giorgio" };
-            return new ViewAsPdf(model, _pdfDriver, new Options.Options(), ViewData);
+            return new ViewAsPdf(_pdfDriver, new Options.Options(), model, ViewData);
         }
 
         public IActionResult Contact()

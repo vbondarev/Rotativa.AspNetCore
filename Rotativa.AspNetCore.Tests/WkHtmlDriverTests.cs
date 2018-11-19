@@ -21,7 +21,7 @@ namespace Rotativa.AspNetCore.Tests
         }
 
         [Fact]
-        public void TestRunWkHtmlToPdf()
+        public void TestRunWkHtmlToPdfDriver()
         {
             var dataForPdf = "test";
             var converter = new WkHtmlToPdfDriver(_wkHtmlExecutingPath);

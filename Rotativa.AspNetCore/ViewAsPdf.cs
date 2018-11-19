@@ -13,54 +13,13 @@ namespace Rotativa.AspNetCore
 {
     public class ViewAsPdf : AsPdfResultBase
     {
-        private string _viewName;
+        private readonly object _model;
+        private readonly ViewDataDictionary _viewData;
 
-        public string ViewName
+        public ViewAsPdf(WkHtmlToPdfDriver driver, Options.Options options, object model, ViewDataDictionary viewData = null) : base(driver, options)
         {
-            get => _viewName ?? string.Empty;
-            set => _viewName = value;
-        }
-
-        private string _masterName;
-
-        public string MasterName
-        {
-            get => _masterName ?? string.Empty;
-            set => _masterName = value;
-        }
-
-        public object Model { get; set; }
-
-        public ViewDataDictionary ViewData { get; set; }
-
-        public ViewAsPdf(WkHtmlToPdfDriver driver, Options.Options options, ViewDataDictionary viewData = null) : base(driver, options)
-        {
-            WkHtmlPath = string.Empty;
-            MasterName = string.Empty;
-            ViewName = string.Empty;
-            Model = null;
-            ViewData = viewData;
-        }
-
-        public ViewAsPdf(string viewName, WkHtmlToPdfDriver driver, Options.Options options, ViewDataDictionary viewData = null) : this(driver, options, viewData)
-        {
-            ViewName = viewName;
-        }
-
-        public ViewAsPdf(object model, WkHtmlToPdfDriver driver, Options.Options options, ViewDataDictionary viewData = null) : this(driver, options, viewData)
-        {
-            Model = model;
-        }
-
-        public ViewAsPdf(string viewName, object model, WkHtmlToPdfDriver driver, Options.Options options, ViewDataDictionary viewData = null) : this(driver, options, viewData)
-        {
-            ViewName = viewName;
-            Model = model;
-        }
-
-        public ViewAsPdf(string viewName, string masterName, object model, WkHtmlToPdfDriver driver, Options.Options options) : this(viewName, model, driver, options)
-        {
-            MasterName = masterName;
+            _model = model;
+            _viewData = viewData;
         }
 
         protected override string GetUrl(ActionContext context)
@@ -68,7 +27,7 @@ namespace Rotativa.AspNetCore
             return string.Empty;
         }
 
-        protected virtual ViewEngineResult GetView(ActionContext context, string viewName, string masterName)
+        protected virtual ViewEngineResult GetView(ActionContext context, string viewName)
         {
             var engine = context.HttpContext.RequestServices.GetService(typeof(ICompositeViewEngine)) as ICompositeViewEngine;
             return engine?.FindView(context, viewName, true);
@@ -82,15 +41,15 @@ namespace Rotativa.AspNetCore
                 viewName = ((ControllerActionDescriptor) context.ActionDescriptor).ActionName;
             }
 
-            var viewResult = GetView(context, viewName, MasterName);
+            var viewResult = GetView(context, viewName);
             var tempDataProvider = context.HttpContext.RequestServices.GetService(typeof(ITempDataProvider)) as ITempDataProvider;
             var viewDataDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
             {
-                Model = Model
+                Model = _model
             };
-            if (ViewData != null)
+            if (_viewData != null)
             {
-                foreach (var item in ViewData)
+                foreach (var item in _viewData)
                 {
                     viewDataDictionary.Add(item);
                 }
