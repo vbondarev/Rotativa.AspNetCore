@@ -45,60 +45,6 @@ namespace Rotativa.AspNetCore
         /// </summary>
         public string FormsAuthenticationCookieName { get; set; }
 
-        /// <summary>
-        /// Sets custom headers.
-        /// </summary>
-        [OptionFlag("--custom-header")]
-        public Dictionary<string, string> CustomHeaders { get; set; }
-
-        /// <summary>
-        /// Sets cookies.
-        /// </summary>
-        [OptionFlag("--cookie")]
-        public Dictionary<string, string> Cookies { get; set; }
-
-        /// <summary>
-        /// Sets post values.
-        /// </summary>
-        [OptionFlag("--post")]
-        public Dictionary<string, string> Post { get; set; }
-
-        /// <summary>
-        /// Indicates whether the page can run JavaScript.
-        /// </summary>
-        [OptionFlag("-n")]
-        public bool IsJavaScriptDisabled { get; set; }
-
-        /// <summary>
-        /// Minimum font size.
-        /// </summary>
-        [OptionFlag("--minimum-font-size")]
-        public int? MinimumFontSize { get; set; }
-
-        /// <summary>
-        /// Sets proxy server.
-        /// </summary>
-        [OptionFlag("-p")]
-        public string Proxy { get; set; }
-
-        /// <summary>
-        /// HTTP Authentication username.
-        /// </summary>
-        [OptionFlag("--username")]
-        public string UserName { get; set; }
-
-        /// <summary>
-        /// HTTP Authentication password.
-        /// </summary>
-        [OptionFlag("--password")]
-        public string Password { get; set; }
-
-        /// <summary>
-        /// Use this if you need another switches that are not currently supported by Rotativa.
-        /// </summary>
-        [OptionFlag("")]
-        public string CustomSwitches { get; set; }
-
         [Obsolete(@"Use BuildFile(this.ControllerContext) method instead and use the resulting binary data to do what needed.")]
         public string SaveOnServerPath { get; set; }
 
