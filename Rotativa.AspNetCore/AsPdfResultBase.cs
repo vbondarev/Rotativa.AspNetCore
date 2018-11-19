@@ -1,17 +1,17 @@
-using System;
+﻿using System;
 using System.Text;
-using Rotativa.AspNetCore.Options;
 
 namespace Rotativa.AspNetCore
 {
     public abstract class AsPdfResultBase : AsResultBase
     {
         protected readonly WkHtmlToPdfDriver Driver;
+        private readonly Options.Options _options;
 
-        protected AsPdfResultBase(WkHtmlToPdfDriver driver)
+        protected AsPdfResultBase(WkHtmlToPdfDriver driver, Options.Options options)
         {
             Driver = driver;
-            PageMargins = new Margins();
+            _options = options;
         }
 
         protected override byte[] WkHtmlConvert(string switches)
@@ -38,7 +38,7 @@ namespace Rotativa.AspNetCore
         {
             var result = new StringBuilder();
 
-            if (PageMargins != null) result.Append(PageMargins);
+            if (_options != null) result.Append(_options);
 
             result.Append(" ");
             result.Append(base.GetConvertOptions());

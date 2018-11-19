@@ -33,7 +33,7 @@ namespace Rotativa.AspNetCore
 
         public ViewDataDictionary ViewData { get; set; }
 
-        public ViewAsPdf(WkHtmlToPdfDriver driver, ViewDataDictionary viewData = null) : base(driver)
+        public ViewAsPdf(WkHtmlToPdfDriver driver, Options.Options options, ViewDataDictionary viewData = null) : base(driver, options)
         {
             WkHtmlPath = string.Empty;
             MasterName = string.Empty;
@@ -42,23 +42,23 @@ namespace Rotativa.AspNetCore
             ViewData = viewData;
         }
 
-        public ViewAsPdf(string viewName, WkHtmlToPdfDriver driver,ViewDataDictionary viewData = null) : this(driver, viewData)
+        public ViewAsPdf(string viewName, WkHtmlToPdfDriver driver, Options.Options options, ViewDataDictionary viewData = null) : this(driver, options, viewData)
         {
             ViewName = viewName;
         }
 
-        public ViewAsPdf(object model, WkHtmlToPdfDriver driver, ViewDataDictionary viewData = null) : this(driver, viewData)
+        public ViewAsPdf(object model, WkHtmlToPdfDriver driver, Options.Options options, ViewDataDictionary viewData = null) : this(driver, options, viewData)
         {
             Model = model;
         }
 
-        public ViewAsPdf(string viewName, object model, WkHtmlToPdfDriver driver, ViewDataDictionary viewData = null) : this(driver, viewData)
+        public ViewAsPdf(string viewName, object model, WkHtmlToPdfDriver driver, Options.Options options, ViewDataDictionary viewData = null) : this(driver, options, viewData)
         {
             ViewName = viewName;
             Model = model;
         }
 
-        public ViewAsPdf(string viewName, string masterName, object model, WkHtmlToPdfDriver driver) : this(viewName, model, driver)
+        public ViewAsPdf(string viewName, string masterName, object model, WkHtmlToPdfDriver driver, Options.Options options) : this(viewName, model, driver, options)
         {
             MasterName = masterName;
         }
